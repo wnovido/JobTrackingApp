@@ -8,7 +8,7 @@ var mongoose = require ("mongoose");
 
 // Here we find an appropriate database to connect to, defaulting to
 // localhost if we don't find one.  
-var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/JobHunt';
+var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/jobtrackingdb_dev';
 
 // Makes connection asynchronously.  Mongoose will queue up database
 // operations and release them when the connection is complete.
@@ -132,7 +132,7 @@ app.post("/addJobhunt", function (req, res) {
     var company = req.body.company;
     var position = req.body.position;
     var source = req.body.source;
-    var contact = req.body.contact;
+    var contactName = req.body.contactName;
     var status = req.body.status;
 
     var jobhunt = new JobHunt({
@@ -140,7 +140,7 @@ app.post("/addJobhunt", function (req, res) {
         company		:	company,
         position	:	position,
         source		:	source,
-        contact		:	contact,
+        contactName :	contactName,
         status		:	status
     });
 

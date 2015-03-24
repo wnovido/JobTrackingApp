@@ -1,1 +1,69 @@
-<p>This is the partial for view 1.</p>
+<div ng-controller="View1Ctrl as app">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title text-left">
+                    List of Job Applications
+                </h3>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <tbody>
+                    <tr>
+                        <th>Date Applied</th>
+                        <th>Company Name</th>
+                        <th>Position</th>
+                        <th>Source</th>
+                        <th>Contact Name</th>
+                        <th>Contact Email</th>
+                        <th>Contact Phone</th>
+                        <th>Status</th>
+                        <th></th><th></th>
+                        <!--<th>Update</th><th>Delete</th>-->
+                    </tr>
+
+                    <tr data-ng-repeat="jobhunt in app.jobhunts">
+                        <td>{{jobhunt.dateApplied | date:"dd-MMMM-yyyy"}}</td>
+                        <td>{{jobhunt.company.Name}}</td>
+                        <td>{{jobhunt.position.Name}}</td>
+                        <td>{{jobhunt.source.Name}}</td>
+                        <td>{{jobhunt.contact.contactName}}</td>
+                        <td>{{jobhunt.contact.contactEmail}}</td>
+                        <td>{{jobhunt.contact.contactPhone}}</td>
+                        <td>{{jobhunt.status.Name}}</td>
+                        <!--td><input type="button" class="btn btn-info pull-center btn-xs" value="Update" ng-click="app.updateJobhunt(jobhunt._id)" /></td-->
+                        <td><a ng-href="#/manageJob/{{jobhunt._id}}" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-edit"></i></a></td>
+                        <td><button type="submit" class="btn btn-danger pull-center btn-xs" ng-click="openDeleteConfirm('sm',jobhunt._id)"/><i class="glyphicon glyphicon-trash"></i></td>
+
+                    </tr>
+
+
+                    <tr data-ng-show="app.jobhunts.length <= 0">
+                        <td colspan="10" style="text-align: center;">No job application yet.</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="panel-footer">
+                <a ng-href="#/manageJob/0" class="btn btn-warning btn-xs pull-left"><i class="glyphicon glyphicon-plus"></i>Add</a>
+                <label></label>
+            </div>
+        </div>
+</div>
+
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Confirm Delete</h3>
+    </div>
+    <div class="modal-body">
+        <tr>Are you sure you want to delete this record?</tr>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">Yes</button>
+        <button class="btn btn-warning" ng-click="cancel()">No</button>
+    </div>
+</script>
+
+
