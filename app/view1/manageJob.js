@@ -260,15 +260,12 @@ jobHuntApp.controller('manageJobHuntCtrl', function ($scope, $http, $modal, $rou
             Group   :   _group,
             Name    :   $scope.referenceName
         }).success(function(data, status, headers, config) {
-            $http.get(url + "/references", {params: {Group :   _group}}).success(function (reference) {
+            $http.get("/references", {params: {Group :   _group}}).success(function (reference) {
                 $scope._reference= reference;
                 $scope.referenceName = '';
                 $scope.shouldBeOpen = true;
             });
             $scope.error = data;
-            //$scope.s = status;
-            //$scope.h = headers;
-            //$scope.c = config;
         });
     };
 
