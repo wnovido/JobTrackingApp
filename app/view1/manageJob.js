@@ -256,7 +256,7 @@ jobHuntApp.controller('manageJobHuntCtrl', function ($scope, $http, $modal, $rou
     var url = sharedFunc.getUrl();
 
     $scope.ok = function () {
-        $http.post("https://glacial-meadow-8069.herokuapp.com/addReference", {
+        $http.post("/addReference", {
             Group   :   _group,
             Name    :   $scope.referenceName
         }).success(function(data, status, headers, config) {
