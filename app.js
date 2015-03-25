@@ -7,13 +7,13 @@ var bodyParser = require('body-parser'); // pull information from HTML POST (exp
 var mongoose = require ("mongoose");
 
 // Here we find an appropriate database to connect to, defaulting to
-// localhost if we don't find one.  
+// localhost if we don't find one.
 var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/jobtrackingdb_dev';
 
 // Makes connection asynchronously.  Mongoose will queue up database
 // operations and release them when the connection is complete.
 mongoose.connect(uristring, function (err, res) {
-  if (err) { 
+  if (err) {
     console.log ('ERROR connecting to: ' + uristring + '. ' + err);
   } else {
     console.log ('Succeeded connected to: ' + uristring);
@@ -40,9 +40,8 @@ fs.readdirSync(__dirname + '/models').forEach(function(filename) {
 });
 
 var JobHunt = mongoose.model('jobhunts');
+var Contact = mongoose.model('contacts');
 var References = mongoose.model('references');
-
-
 
 
 
@@ -112,6 +111,33 @@ app.put("/updateReference/:_id", function(req, res) {
 
 
 
+//** contacts
+//**
+// get all
+app.get("/contacts", function (req, res) {
+    Contact.find().exec(function (err, contacts) {
+        res.send(contacts);
+    });
+});
+
+app.post("/addContact", function (req, res) {
+    var contactName = req.body.contactName;
+    var contactEmail = req.body.contactEmail;
+    var contactPhone = req.body.contactPhone;
+    var contact = new Contact({
+        contactName		:	contactName,
+        contactEmail	:	contactEmail,
+        contactPhone	:	contactPhone});
+
+    contact.save(function (err) {
+        res.send();
+    });
+});
+
+
+
+
+
 
 
 // jobhunt table model
@@ -132,7 +158,7 @@ app.post("/addJobhunt", function (req, res) {
     var company = req.body.company;
     var position = req.body.position;
     var source = req.body.source;
-    var contactName = req.body.contactName;
+    var contact = req.body.contact;
     var status = req.body.status;
 
     var jobhunt = new JobHunt({
@@ -140,7 +166,7 @@ app.post("/addJobhunt", function (req, res) {
         company		:	company,
         position	:	position,
         source		:	source,
-        contactName :	contactName,
+        contact     :	contact,
         status		:	status
     });
 

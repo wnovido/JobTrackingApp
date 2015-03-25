@@ -9,11 +9,11 @@ angular.module('jobHuntServices',[]).
         var _jobHuntService = {};
 
         _jobHuntService.getJobHunts = function() {
-            return $http.get(urlBase + "/jobhunts");
+            return $http.get("/jobhunts");
         };
 
         _jobHuntService.getJobHuntByID = function(_jobid) {
-            return $http.get(urlBase + "/jobhunts/" + _jobid);
+            return $http.get("/jobhunts/" + _jobid);
         };
 
         return _jobHuntService;

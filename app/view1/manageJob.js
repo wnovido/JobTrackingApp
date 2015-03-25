@@ -22,7 +22,7 @@ jobHuntApp.controller('manageJobHuntCtrl', function ($scope, $http, $modal, $rou
     }
 
     function loadCompanies() {
-        $http.get(url + "/references", {params: {Group :   'Company'}}).success(function (reference) {
+        $http.get("/references", {params: {Group :   'Company'}}).success(function (reference) {
             app.companies = reference;
         });
     }
@@ -31,7 +31,7 @@ jobHuntApp.controller('manageJobHuntCtrl', function ($scope, $http, $modal, $rou
 
 
     function loadContacts() {
-        $http.get(url + "/contacts").success(function (contacts) {
+        $http.get("/contacts").success(function (contacts) {
             app.contacts = contacts;
         });
     }
@@ -40,7 +40,7 @@ jobHuntApp.controller('manageJobHuntCtrl', function ($scope, $http, $modal, $rou
 
 
     function loadPositions() {
-        $http.get(url + "/references", {params: {Group :   'Position'}}).success(function (reference) {
+        $http.get("/references", {params: {Group :   'Position'}}).success(function (reference) {
             app.positions = reference;
         });
     }
@@ -49,7 +49,7 @@ jobHuntApp.controller('manageJobHuntCtrl', function ($scope, $http, $modal, $rou
 
 
     function loadSources() {
-        $http.get(url + "/references", {params: {Group :   'Source'}}).success(function (reference) {
+        $http.get("/references", {params: {Group :   'Source'}}).success(function (reference) {
             app.sources = reference;
         });
     }
@@ -58,7 +58,7 @@ jobHuntApp.controller('manageJobHuntCtrl', function ($scope, $http, $modal, $rou
 
 
     function loadStatus() {
-        $http.get(url + "/references", {params: {Group :   'Status'}}).success(function (reference) {
+        $http.get("/references", {params: {Group :   'Status'}}).success(function (reference) {
             app.status = reference;
         });
     }
@@ -78,8 +78,8 @@ jobHuntApp.controller('manageJobHuntCtrl', function ($scope, $http, $modal, $rou
                 company     : $scope.jobHuntInfo.company,
                 position    : $scope.jobHuntInfo.position,
                 source      : $scope.jobHuntInfo.source,
-                contact     : $scope.jobHuntInfo.contact,
-                status     : $scope.jobHuntInfo.status
+                contactName : $scope.jobHuntInfo.contactName,
+                status      : $scope.jobHuntInfo.status
             }).success(function () {
                 window.history.back()
             });
@@ -89,8 +89,8 @@ jobHuntApp.controller('manageJobHuntCtrl', function ($scope, $http, $modal, $rou
                 company     :   $scope.jobHuntInfo.company,
                 position    :   $scope.jobHuntInfo.position,
                 source      :   $scope.jobHuntInfo.source,
-                contact     :   $scope.jobHuntInfo.contact,
-                status     : $scope.jobHuntInfo.status
+                contactName :   $scope.jobHuntInfo.contactName,
+                status      : $scope.jobHuntInfo.status
             }).success(function()  {
                 window.history.back();
             });
@@ -224,12 +224,12 @@ jobHuntApp.controller('manageJobHuntCtrl', function ($scope, $http, $modal, $rou
     $scope.shouldBeOpen = true;
 
     $scope.ok = function () {
-        $http.post(url + "/addContact", {
+        $http.post("/addContact", {
                 contactName     :   $scope.contactInfo.name,
                 contactEmail    :   $scope.contactInfo.eMail,
                 contactPhone    :   $scope.contactInfo.phone
             }).success(function() {
-                $http.get(url + "/contacts").success(function (contacts) {
+                $http.get("/contacts").success(function (contacts) {
                     $scope._contacts = contacts;
                     $scope.shouldBeOpen = true;
                     $scope.contactInfo = {};
