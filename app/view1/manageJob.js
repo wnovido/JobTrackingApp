@@ -5,7 +5,6 @@
 
 jobHuntApp.controller('manageJobHuntCtrl', function ($scope, $http, $modal, $routeParams, $timeout, sharedFunc, jobHuntFactory) {
     var app = this;
-    var url = sharedFunc.getUrl();
     $scope.shouldBeOpen = true;
 
 
@@ -73,23 +72,23 @@ jobHuntApp.controller('manageJobHuntCtrl', function ($scope, $http, $modal, $rou
 
     app.manageJobhunt = function () {
         if ($routeParams._jobID == 0)
-            $http.post(url + "/addJobhunt", {
+            $http.post("/addJobhunt", {
                 dateApplied : $scope.jobHuntInfo.dateApplied,
                 company     : $scope.jobHuntInfo.company,
                 position    : $scope.jobHuntInfo.position,
                 source      : $scope.jobHuntInfo.source,
-                contactName : $scope.jobHuntInfo.contactName,
+                contact     : $scope.jobHuntInfo.contact,
                 status      : $scope.jobHuntInfo.status
             }).success(function () {
                 window.history.back()
             });
         else
-            $http.put(url + "/updateJobhunt/" + $routeParams._jobID, {
+            $http.put("/updateJobhunt/" + $routeParams._jobID, {
                 dateApplied :   $scope.jobHuntInfo.dateApplied,
                 company     :   $scope.jobHuntInfo.company,
                 position    :   $scope.jobHuntInfo.position,
                 source      :   $scope.jobHuntInfo.source,
-                contactName :   $scope.jobHuntInfo.contactName,
+                contact     :   $scope.jobHuntInfo.contact,
                 status      : $scope.jobHuntInfo.status
             }).success(function()  {
                 window.history.back();
@@ -220,7 +219,6 @@ jobHuntApp.controller('manageJobHuntCtrl', function ($scope, $http, $modal, $rou
 
 .controller('ContactModalInstanceCtrl', function ($scope, $modalInstance, $http, sharedFunc, _contacts) {
     $scope._contacts = _contacts;
-    var url = sharedFunc.getUrl();
     $scope.shouldBeOpen = true;
 
     $scope.ok = function () {
@@ -252,8 +250,6 @@ jobHuntApp.controller('manageJobHuntCtrl', function ($scope, $http, $modal, $rou
     $scope._reference = _reference;
     $scope._group =_group;
     $scope.shouldBeOpen = true;
-
-    var url = sharedFunc.getUrl();
 
     $scope.ok = function () {
         $http.post("/addReference", {
@@ -306,10 +302,10 @@ jobHuntApp.controller('manageJobHuntCtrl', function ($scope, $http, $modal, $rou
     $scope.updateReference = function (i,_group) {
         var _t = $scope._reference[i];
 
-        $http.put(url + "/updateReference/" + _t._id, {
+        $http.put("/updateReference/" + _t._id, {
                 Name: $scope.newName
         }).success(function () {
-            $http.get(url + "/references", {params: {Group :   _group}}).success(function (reference) {
+            $http.get("/references", {params: {Group :   _group}}).success(function (reference) {
                 $scope._reference = reference;
             });
         });
@@ -320,11 +316,9 @@ jobHuntApp.controller('manageJobHuntCtrl', function ($scope, $http, $modal, $rou
 
 
 .controller('ModalDeleteCtrl', function ($scope, $http, $modalInstance, sharedFunc, _id, _group) {
-    var url = sharedFunc.getUrl();
-
     $scope.ok = function () {
-        $http.delete(url + "/deleteReference/" + _id).success(function () {
-            $http.get(url + "/references", {params: {Group :   _group}}).success(function (reference) {
+        $http.delete("/deleteReference/" + _id).success(function () {
+            $http.get("/references", {params: {Group :   _group}}).success(function (reference) {
                 $modalInstance.close(reference);
             });
         });
