@@ -32,8 +32,9 @@
                         <td>{{jobhunt.contact.contactPhone}}</td>
                         <td>{{jobhunt.status.Name}}</td>
                         <!--td><input type="button" class="btn btn-info pull-center btn-xs" value="Update" ng-click="app.updateJobhunt(jobhunt._id)" /></td-->
-                        <td><a ng-href="#/manageJob/{{jobhunt._id}}" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-edit"></i></a></td>
-                        <td><button type="submit" class="btn btn-danger pull-center btn-xs" ng-click="openDeleteConfirm('sm',jobhunt._id)"/><i class="glyphicon glyphicon-trash"></i></td>
+
+                        <td><a ng-href="#/manageJob/{{jobhunt._id}}" class="btn-info btn-sm"><i class="glyphicon glyphicon-edit"></i></a></td>
+                        <td><button type="submit" class="btn-danger pull-center btn-xs" ng-click="openDeleteConfirm('sm',jobhunt._id)"/><i class="glyphicon glyphicon-trash"></i></td>
 
                     </tr>
 
@@ -47,7 +48,7 @@
             </div>
 
             <div class="panel-footer">
-                <a ng-href="#/manageJob/0" class="btn btn-warning btn-xs pull-left"><i class="glyphicon glyphicon-plus"></i>Add</a>
+                <a ng-href="#/manageJob/0" class="btn-warning btn-xs pull-left"><i class="glyphicon glyphicon-plus"></i>Add</a>
                 <label></label>
             </div>
         </div>
