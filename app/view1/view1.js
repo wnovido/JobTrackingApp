@@ -2,11 +2,11 @@
 
 var jobHuntApp = angular.module('myApp.view1', ['ngRoute','jobHuntServices'])
 
-.config(['$routeProvider', function($routeProvider) {
-    $routeProvider.
-        when('/view1', {templateUrl: 'view1/view1.html', controller: 'View1Ctrl'}).
-        when('/manageJob/:_jobID', {templateUrl: 'view1/manageJob.html', controller: 'manageJobHuntCtrl'});
-}]);
+    .config(['$routeProvider', function($routeProvider) {
+        $routeProvider.
+            when('/view1', {templateUrl: 'view1/view1.html', controller: 'View1Ctrl'}).
+            when('/manageJob/:_jobID', {templateUrl: 'view1/manageJob.html', controller: 'manageJobHuntCtrl'});
+    }]);
 
 jobHuntApp.controller('View1Ctrl', function($scope, $http, $modal, $log, sharedFunc, jobHuntFactory) {
     var app = this;
@@ -14,7 +14,9 @@ jobHuntApp.controller('View1Ctrl', function($scope, $http, $modal, $log, sharedF
 
     jobHuntFactory.getJobHunts().then(function(data) {
         app.jobhunts = data.data;
+        $scope.displayedJobs = [].concat(app.jobhunts);
     });
+    $scope.itemsByPage=5;
 
     $scope.openDeleteConfirm = function (size,_jobID) {
         var modalInstance = $modal.open({
@@ -24,8 +26,8 @@ jobHuntApp.controller('View1Ctrl', function($scope, $http, $modal, $log, sharedF
             resolve: {
                 _jobID: function () {
                     return _jobID;
+                }
             }
-          }
         });
 
         modalInstance.result.then(function (jobHunts) {
@@ -39,22 +41,22 @@ jobHuntApp.controller('View1Ctrl', function($scope, $http, $modal, $log, sharedF
 
 })
 
-.controller('ModalJobHuntCtrl', function ($scope, $http, $modalInstance, _jobID, sharedFunc,jobHuntFactory) {
+    .controller('ModalJobHuntCtrl', function ($scope, $http, $modalInstance, _jobID, sharedFunc,jobHuntFactory) {
 
-  var url = sharedFunc.getUrl();
+        var url = sharedFunc.getUrl();
 
-  $scope.ok = function () {
-    $http.delete(url + "/deleteJobhunt/" + _jobID).success(function () {
-        jobHuntFactory.getJobHunts().then(function(data) {
-            $modalInstance.close(data.data);
-        });
-    });
-  };
+        $scope.ok = function () {
+            $http.delete(url + "/deleteJobhunt/" + _jobID).success(function () {
+                jobHuntFactory.getJobHunts().then(function(data) {
+                    $modalInstance.close(data.data);
+                });
+            });
+        };
 
-  $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
-  };
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
 
-})
+    })
 ;
 
